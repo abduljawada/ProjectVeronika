@@ -1,5 +1,6 @@
 using UnityEngine;
 using Pathfinding;
+using UnityEngine.SceneManagement;
 
 public class AIDestinationManager : MonoBehaviour
 {
@@ -18,5 +19,10 @@ public class AIDestinationManager : MonoBehaviour
         DestinationSetter.target = new GameObject().transform;
         DestinationSetter.target.position = pos;
         DestinationSetter.target.tag = "PathPoint";
+
+        if (SceneManager.GetActiveScene().Equals(SceneManager.GetSceneAt(0)))
+        {
+            SceneManager.MoveGameObjectToScene(DestinationSetter.target.gameObject, SceneManager.GetSceneAt(1));
+        }
     }
 }

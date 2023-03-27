@@ -27,6 +27,7 @@ public class EnemyEye : MonoBehaviour
             else
             {
                 LastSeenPos = Movement.Singleton.transform.position;
+                Mind.LookAtPlayer();
             }
         }
 
@@ -47,12 +48,12 @@ public class EnemyEye : MonoBehaviour
             {
                 angle -= 360;
             }
-            else if (angle <= -360)
+            else if (angle < 0)
             {
                 angle += 360;
             }
-            //Debug.Log("angle after subtraction: " + angle);
-            if (angle >= -angleRange && angle <= angleRange)
+            Debug.Log("angle after subtraction: " + angle);
+            if (angle >= 360 - angleRange || angle <= angleRange)
             {
                 Debug.Log("Player In Angle Range");
                 RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, (Movement.Singleton.transform.position - transform.position).normalized);

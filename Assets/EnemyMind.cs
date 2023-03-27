@@ -9,15 +9,13 @@ public class EnemyMind : MonoBehaviour
     AIPath Path => GetComponent<AIPath>();
     AIDestinationManager DestinationManager => GetComponent<AIDestinationManager>();
     EnemyEye Eye => GetComponent<EnemyEye>();
+    private float _angleSpun;
 
     // Start is called before the first frame update
     void Start()
     {
         Vector2 nextPoint = Patrol.GetNextPoint();
-        if (nextPoint != null)
-        {
-            DestinationManager.AssignPathPoint(nextPoint);
-        }
+        DestinationManager.AssignPathPoint(nextPoint);
     }
 
     // Update is called once per frame
@@ -38,6 +36,23 @@ public class EnemyMind : MonoBehaviour
                 }
             }
         }
+        else if (MyState == States.Searching)
+        {
+            if (transform.position == DestinationSetter.target.position)
+            {
+                float amountToSpin = 360f * Time.deltaTime;
+                _angleSpun += amountToSpin;
+                transform.Rotate(new Vector3(0f, 0f, amountToSpin));
+
+                if (_angleSpun >= 360f)
+                {
+                    _angleSpun = 0f;
+                    Destroy(DestinationSetter.target.gameObject);
+                    MyState = States.Idle;
+                    DestinationManager.AssignPathPoint(Patrol.GetNextPoint());
+                }
+            }
+        }
     }
 
     public void FoundPlayer()
@@ -45,7 +60,7 @@ public class EnemyMind : MonoBehaviour
         MyState = States.Attack;
         DestinationSetter.target = Movement.Singleton.transform;
         Path.whenCloseToDestination = CloseToDestinationMode.Stop;
-        
+        LookAtPlayer();
     }
 
     public void LostPlayer()
@@ -55,12 +70,12 @@ public class EnemyMind : MonoBehaviour
         DestinationManager.AssignPathPoint(Eye.LastSeenPos);
     }
 
-    //void LookAtPlayer()
-    //{
-    //    float distX = gameManager.player.transform.position.x - transform.position.x;
-    //    float distY = gameManager.player.transform.position.y - transform.position.y;
-    //    transform.eulerAngles = new Vector3(0, 0, (Mathf.Rad2Deg * Mathf.Atan2(distY, distX)) - 90f);
-    //}
+    public void LookAtPlayer()
+    {
+        Vector2 direction = Eye.LastSeenPos - (Vector2) transform.position;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+    }
 }
 
 public enum States
