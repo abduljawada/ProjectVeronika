@@ -4,7 +4,6 @@ using UnityEngine;
 public class CameraMovement : NetworkBehaviour
 {
     [SerializeField] private float moveSpeed = 3f;
-
     // Update is called once per frame
     void Update()
     {
@@ -16,8 +15,7 @@ public class CameraMovement : NetworkBehaviour
         else
         {
             if (!Movement.Singleton) return;
-            transform.position = Movement.Singleton.transform.position;
-            transform.position += Vector3.forward * -10f;
+            transform.position = Movement.Singleton.transform.position + Vector3.forward * -10;
         }
         
 
