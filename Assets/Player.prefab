@@ -142,6 +142,7 @@ GameObject:
   - component: {fileID: 6262192389793082012}
   - component: {fileID: 8807862717787972070}
   - component: {fileID: 8785666052544403412}
+  - component: {fileID: 6988889385414529462}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -334,7 +335,7 @@ MonoBehaviour:
   - {x: 0.3, y: -0.5, z: 0}
   m_ShapePathHash: -1997108283
   m_Mesh: {fileID: 0}
-  m_InstanceId: 37522
+  m_InstanceId: 33894
 --- !u!114 &6262192389793082012
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,3 +390,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d7c879794dfda4687da0e400131852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &6988889385414529462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4043579103028879276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a2ef54bed614c143bb7216e40d1fd81, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onDeathEvent:
+    m_PersistentCalls:
+      m_Calls: []
