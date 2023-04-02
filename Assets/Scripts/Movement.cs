@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Movement : NetworkBehaviour
 {
@@ -8,9 +9,9 @@ public class Movement : NetworkBehaviour
     [SerializeField] float speed = 5f;
     [SerializeField] float acceleration = 0.1f;
     [SerializeField] float crouchingSpeed = 1.5f;
-    [SerializeField] Color crouchColor = new(0, 0, 0);
+    [SerializeField] private UnityEvent onCrouch;
+    [SerializeField] private UnityEvent onStopCrouch;
     Rigidbody2D Rb => GetComponent<Rigidbody2D>();
-    SpriteManager SpriteManager => GetComponent<SpriteManager>();
     Vector2 _velocity;
 
     private void Awake()
@@ -24,8 +25,7 @@ public class Movement : NetworkBehaviour
             Destroy(gameObject);
         }
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
         if (!IsOwner) return;
@@ -36,13 +36,14 @@ public class Movement : NetworkBehaviour
         if (Input.GetKeyDown(KeyCode.X))
         {
             isCrouching = !isCrouching;
+            
             if (isCrouching)
             {
-                SpriteManager.UpdateColor(crouchColor);
+                onCrouch?.Invoke();
             }
             else
             {
-                SpriteManager.ResetColor();
+                onStopCrouch?.Invoke();
             }
         }
 

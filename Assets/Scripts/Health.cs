@@ -19,7 +19,15 @@ public class Health : MonoBehaviour
 
         if (_currentHealth <= 0)
         {
-            onDeathEvent.Invoke();
+            onDeathEvent?.Invoke();
+            
+            
+            SceneLoader.Singleton.ReloadNetworkScene();
         }
+    }
+
+    public void Reset()
+    {
+        _currentHealth = maxHealth;
     }
 }

@@ -40,8 +40,10 @@ public class EnemyEye : MonoBehaviour
         if (Vector2.Distance(transform.position, Movement.Singleton.transform.position) < sightDistance)
         {
             Debug.Log("Player In Distance");
-            float distX = Movement.Singleton.transform.position.x - transform.position.x;
-            float distY = Movement.Singleton.transform.position.y - transform.position.y;
+            Vector2 playerPos = Movement.Singleton.transform.position;
+            Vector2 myPos = transform.position;
+            float distX = playerPos.x - myPos.x;
+            float distY = playerPos.y - myPos.y;
             float angle = Mathf.Rad2Deg * Mathf.Atan2(distX, distY);
             angle += transform.eulerAngles.z;
             if (angle >= 360)
@@ -52,11 +54,12 @@ public class EnemyEye : MonoBehaviour
             {
                 angle += 360;
             }
-            Debug.Log("angle after subtraction: " + angle);
+            //Debug.Log("angle after subtraction: " + angle);
             if (angle >= 360 - angleRange || angle <= angleRange)
             {
                 Debug.Log("Player In Angle Range");
-                RaycastHit2D raycastHit = Physics2D.Raycast(transform.position, (Movement.Singleton.transform.position - transform.position).normalized);
+                var position = transform.position;
+                RaycastHit2D raycastHit = Physics2D.Raycast(position, (Movement.Singleton.transform.position - position).normalized);
                 if (raycastHit.transform.gameObject == Movement.Singleton.gameObject)
                 {
                     Debug.Log("Player In Sight");
@@ -70,9 +73,11 @@ public class EnemyEye : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, sightDistance);
+        var position = transform.position;
+        Gizmos.DrawWireSphere(position, sightDistance);
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + sightDistance * Mathf.Sin((angleRange - transform.eulerAngles.z) *Mathf.Deg2Rad), transform.position.y + sightDistance * Mathf.Cos((angleRange - transform.eulerAngles.z) * Mathf.Deg2Rad)));
-        Gizmos.DrawLine(transform.position, new Vector2(transform.position.x + sightDistance * Mathf.Sin(-(angleRange + transform.eulerAngles.z) * Mathf.Deg2Rad), transform.position.y + sightDistance * Mathf.Cos(-(angleRange + transform.eulerAngles.z) * Mathf.Deg2Rad)));
+        var eulerAngles = transform.eulerAngles;
+        Gizmos.DrawLine(position, new Vector2(position.x + sightDistance * Mathf.Sin((angleRange - eulerAngles.z) *Mathf.Deg2Rad), position.y + sightDistance * Mathf.Cos((angleRange - eulerAngles.z) * Mathf.Deg2Rad)));
+        Gizmos.DrawLine(position, new Vector2(position.x + sightDistance * Mathf.Sin(-(angleRange + eulerAngles.z) * Mathf.Deg2Rad), position.y + sightDistance * Mathf.Cos(-(angleRange + eulerAngles.z) * Mathf.Deg2Rad)));
     }
 }

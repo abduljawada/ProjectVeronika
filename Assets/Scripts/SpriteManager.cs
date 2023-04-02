@@ -4,6 +4,7 @@ public class SpriteManager : MonoBehaviour
 {
     SpriteRenderer SpriteRenderer => GetComponent<SpriteRenderer>();
     Color _orgColor;
+    [SerializeField] private Color altColor;
 
     // Start is called before the first frame update
     void Start()
@@ -11,12 +12,12 @@ public class SpriteManager : MonoBehaviour
         _orgColor = SpriteRenderer.color;
     }
 
-    public void UpdateColor(Color color)
+    public void ChangeToAltColor()
     {
-        SpriteRenderer.color = color;
+        SpriteRenderer.color = altColor;
     }
 
-    public void ResetColor()
+    public void Reset()
     {
         SpriteRenderer.color = _orgColor;
     }
