@@ -16,7 +16,7 @@ public class NetworkButtons : MonoBehaviour
         Transport.ConnectionData.Address = ipInputField.text;
         UnloadScene();
         NetworkManager.Singleton.StartClient();
-        Destroy(Movement.Singleton.gameObject.GetComponentInChildren<Light2D>().gameObject);
+        Destroy(PlayerController.Singleton.gameObject.GetComponentInChildren<Light2D>().gameObject);
     }
 
     public void StartHost()

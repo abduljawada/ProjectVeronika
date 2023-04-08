@@ -4,11 +4,25 @@ using UnityEngine;
 public class EnemyMind : MonoBehaviour
 {
     public States MyState { get; private set; } = States.Idle;
-    AIDestinationSetter DestinationSetter => GetComponent<AIDestinationSetter>();
-    AIPatrol Patrol => GetComponent<AIPatrol>();
-    AIPath Path => GetComponent<AIPath>();
-    AIDestinationManager DestinationManager => GetComponent<AIDestinationManager>();
-    EnemyEye Eye => GetComponent<EnemyEye>();
+
+    [SerializeField]
+    private float rotationSpeed = 0.5f;
+
+    [SerializeField]
+    private float fireRate = 0.5f;
+
+    private float _nextFireTime;
+
+    private AIDestinationSetter DestinationSetter => GetComponent<AIDestinationSetter>();
+    
+    private AIPatrol Patrol => GetComponent<AIPatrol>();
+    
+    private AIPath Path => GetComponent<AIPath>();
+    
+    private AIDestinationManager DestinationManager => GetComponent<AIDestinationManager>();
+    
+    private EnemyEye Eye => GetComponent<EnemyEye>();
+    
     private float _angleSpun;
 
     // Start is called before the first frame update
@@ -53,12 +67,31 @@ public class EnemyMind : MonoBehaviour
                 }
             }
         }
+
+        if (MyState == States.Attack && Time.time > _nextFireTime)
+        {
+            _nextFireTime = Time.time + fireRate;
+
+            Transform myTransform = transform;
+            
+            Vector2 pos = myTransform.position;
+
+            Vector2 dir = myTransform.up;
+            
+            RaycastHit2D hit = Physics2D.Raycast(pos, dir, Eye.sightDistance, Eye.raycastLayer);
+            
+            if (!hit.collider) return;
+            
+            Debug.Log("Enemy is Hitting " + hit.collider.name);
+                
+            if (hit.collider.tag.Equals("Player")) hit.collider.GetComponent<Health>().LoseHealth();
+        }
     }
 
     public void FoundPlayer()
     {
         MyState = States.Attack;
-        DestinationSetter.target = Movement.Singleton.transform;
+        DestinationSetter.target = PlayerController.Singleton.transform;
         Path.whenCloseToDestination = CloseToDestinationMode.Stop;
         LookAtPlayer();
     }
@@ -74,7 +107,15 @@ public class EnemyMind : MonoBehaviour
     {
         Vector2 direction = Eye.LastSeenPos - (Vector2) transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        Quaternion nextRotation = Quaternion.AngleAxis(angle - 90, Vector3.forward);
+        transform.rotation = Quaternion.Slerp(transform.rotation, nextRotation, rotationSpeed * Time.deltaTime);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        
+        Gizmos.DrawLine(transform.position, transform.position + transform.up * Eye.sightDistance);
     }
 }
 

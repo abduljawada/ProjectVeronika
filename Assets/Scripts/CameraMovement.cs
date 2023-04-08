@@ -14,8 +14,8 @@ public class CameraMovement : NetworkBehaviour
         }
         else
         {
-            if (!Movement.Singleton) return;
-            transform.position = Movement.Singleton.transform.position + Vector3.forward * -10;
+            if (!PlayerController.Singleton) return;
+            transform.position = PlayerController.Singleton.transform.position + Vector3.forward * -10;
         }
         
 

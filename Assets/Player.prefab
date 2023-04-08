@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4043579102575329424}
   - component: {fileID: 4043579102575329427}
   - component: {fileID: 5650180135516054070}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ GameObject:
   - component: {fileID: -20912560279614881}
   - component: {fileID: -4758281850203175841}
   - component: {fileID: 6968237286609679955}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -245,6 +245,11 @@ MonoBehaviour:
   speed: 5
   acceleration: 0.2
   crouchingSpeed: 1.5
+  shootingDistance: 7
+  fireRate: 0.5
+  raycastLayer:
+    serializedVersion: 2
+    m_Bits: 72
   onCrouch:
     m_PersistentCalls:
       m_Calls:
@@ -481,7 +486,7 @@ GameObject:
   - component: {fileID: 340702187670020221}
   - component: {fileID: 2518308346312489479}
   - component: {fileID: 4911438935689948255}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class EnemyEye : MonoBehaviour
 {
     [SerializeField] float angleRange = 45f;
-    [SerializeField] float sightDistance = 7f;
+    public float sightDistance = 7f;
+    public LayerMask raycastLayer;
     EnemyMind Mind => GetComponent<EnemyMind>();
     public Vector2 LastSeenPos { get; private set; }
     
@@ -14,7 +16,7 @@ public class EnemyEye : MonoBehaviour
         {
             if (IsPlayerInSight())
             {
-                LastSeenPos = Movement.Singleton.transform.position;
+                LastSeenPos = PlayerController.Singleton.transform.position;
                 Mind.FoundPlayer();
             }
         }
@@ -26,7 +28,7 @@ public class EnemyEye : MonoBehaviour
             }
             else
             {
-                LastSeenPos = Movement.Singleton.transform.position;
+                LastSeenPos = PlayerController.Singleton.transform.position;
                 Mind.LookAtPlayer();
             }
         }
@@ -35,36 +37,37 @@ public class EnemyEye : MonoBehaviour
 
     bool IsPlayerInSight()
     {
-        if (!Movement.Singleton) return false;
+        if (!PlayerController.Singleton) return false;
         
-        if (Vector2.Distance(transform.position, Movement.Singleton.transform.position) < sightDistance)
+        //Debug.Log("Player In Distance");
+        Vector2 playerPos = PlayerController.Singleton.transform.position;
+        Vector2 myPos = transform.position;
+        float distX = playerPos.x - myPos.x;
+        float distY = playerPos.y - myPos.y;
+        float angle = Mathf.Rad2Deg * Mathf.Atan2(distX, distY);
+        angle += transform.eulerAngles.z;
+        if (angle >= 360)
         {
-            Debug.Log("Player In Distance");
-            Vector2 playerPos = Movement.Singleton.transform.position;
-            Vector2 myPos = transform.position;
-            float distX = playerPos.x - myPos.x;
-            float distY = playerPos.y - myPos.y;
-            float angle = Mathf.Rad2Deg * Mathf.Atan2(distX, distY);
-            angle += transform.eulerAngles.z;
-            if (angle >= 360)
+            angle -= 360;
+        }
+        else if (angle < 0)
+        {
+            angle += 360;
+        }
+        //Debug.Log("angle after subtraction: " + angle);
+        if (angle >= 360 - angleRange || angle <= angleRange)
+        {
+            //Debug.Log("Player In Angle Range");
+            Vector3 pos = transform.position;
+            
+            RaycastHit2D raycastHit = Physics2D.Raycast(pos, (PlayerController.Singleton.transform.position - pos).normalized, sightDistance, raycastLayer);
+
+            if (!raycastHit.collider) return false;
+                
+            if (raycastHit.transform.gameObject == PlayerController.Singleton.gameObject)
             {
-                angle -= 360;
-            }
-            else if (angle < 0)
-            {
-                angle += 360;
-            }
-            //Debug.Log("angle after subtraction: " + angle);
-            if (angle >= 360 - angleRange || angle <= angleRange)
-            {
-                Debug.Log("Player In Angle Range");
-                var position = transform.position;
-                RaycastHit2D raycastHit = Physics2D.Raycast(position, (Movement.Singleton.transform.position - position).normalized);
-                if (raycastHit.transform.gameObject == Movement.Singleton.gameObject)
-                {
-                    Debug.Log("Player In Sight");
-                    return true;
-                }
+                //Debug.Log("Player In Sight");
+                return true;
             }
         }
         return false;

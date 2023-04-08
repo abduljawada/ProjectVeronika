@@ -21,8 +21,7 @@ public class Health : MonoBehaviour
         {
             onDeathEvent?.Invoke();
             
-            
-            SceneLoader.Singleton.ReloadNetworkScene();
+            if (gameObject.tag.Equals("Player")) SceneLoader.Singleton.ReloadNetworkScene();
         }
     }
 

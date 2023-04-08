@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 3684845117548681948}
   - component: {fileID: -8926088325623544558}
   - component: {fileID: 4285604827340981352}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 1
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3950724767900972438}
   m_Father: {fileID: 0}
@@ -233,6 +233,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   angleRange: 60
   sightDistance: 7
+  raycastLayer:
+    serializedVersion: 2
+    m_Bits: 136
 --- !u!114 &1579532437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +248,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34cd6f0f37050bf4eafe1a666c8c04e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationSpeed: 7.5
+  fireRate: 0.5
 --- !u!114 &5894223193810710743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,7 +354,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4265975354647971684}
   - component: {fileID: 4265975354647971683}
-  m_Layer: 2
+  m_Layer: 6
   m_Name: Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -433,7 +438,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4265975356044830347}
   - component: {fileID: 4265975356044830346}
-  m_Layer: 2
+  m_Layer: 6
   m_Name: Circle (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -518,7 +523,7 @@ GameObject:
   - component: {fileID: 3950724767900972438}
   - component: {fileID: 7502362153784143796}
   - component: {fileID: 1881437226995087571}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Visuals
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -620,7 +625,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 33902
+  m_InstanceId: 36588
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.5, y: 0.5, z: 0}

@@ -20,9 +20,9 @@ public class AIDestinationManager : MonoBehaviour
         DestinationSetter.target.position = pos;
         DestinationSetter.target.tag = "PathPoint";
 
-        if (SceneManager.GetActiveScene().Equals(SceneManager.GetSceneAt(0)))
+        if (SceneManager.GetActiveScene().Equals(SceneManager.GetSceneByBuildIndex(0)))
         {
-            SceneManager.MoveGameObjectToScene(DestinationSetter.target.gameObject, SceneManager.GetSceneAt(1));
+            SceneManager.MoveGameObjectToScene(DestinationSetter.target.gameObject, SceneManager.GetSceneByBuildIndex(1));
         }
     }
 }
