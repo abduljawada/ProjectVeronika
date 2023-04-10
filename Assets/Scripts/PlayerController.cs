@@ -112,7 +112,7 @@ public class PlayerController : NetworkBehaviour
                 RaycastHit2D hit = Physics2D.Raycast(pos, direction, shootingDistance, raycastLayer);
                 
                 LineRenderer.SetPositions(new []{transform.position, transform.position + (Vector3) direction.normalized * shootingDistance});
-                StartCoroutine(AnimateShootingLine());
+                AnimateShootingLineClientRPC();
                 
                 Debug.Log("Hitting " + hit.collider.name);
                 
@@ -126,6 +126,12 @@ public class PlayerController : NetworkBehaviour
         Rb.velocity = isCrouching ? _velocity : Vector2.Lerp(Rb.velocity, _velocity, acceleration);
     }
 
+    [ClientRpc]
+    private void AnimateShootingLineClientRPC()
+    {
+        StartCoroutine(AnimateShootingLine());
+    }
+    
     private IEnumerator AnimateShootingLine()
     {
         LineRenderer.enabled = true;
