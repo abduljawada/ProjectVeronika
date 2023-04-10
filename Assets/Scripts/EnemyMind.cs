@@ -1,3 +1,4 @@
+using System.Collections;
 using Pathfinding;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class EnemyMind : MonoBehaviour
     [SerializeField]
     private float fireRate = 0.5f;
 
+    [SerializeField] private float lineDisplayTime = 0.5f;
+
     private float _nextFireTime;
 
     private AIDestinationSetter DestinationSetter => GetComponent<AIDestinationSetter>();
@@ -22,6 +25,8 @@ public class EnemyMind : MonoBehaviour
     private AIDestinationManager DestinationManager => GetComponent<AIDestinationManager>();
     
     private EnemyEye Eye => GetComponent<EnemyEye>();
+
+    private LineRenderer LineRenderer => GetComponent<LineRenderer>();
     
     private float _angleSpun;
 
@@ -70,6 +75,8 @@ public class EnemyMind : MonoBehaviour
 
         if (MyState == States.Attack && Time.time > _nextFireTime)
         {
+            StartCoroutine(AnimateShootingLine());
+            
             _nextFireTime = Time.time + fireRate;
 
             Transform myTransform = transform;
@@ -116,6 +123,14 @@ public class EnemyMind : MonoBehaviour
         Gizmos.color = Color.green;
         
         Gizmos.DrawLine(transform.position, transform.position + transform.up * Eye.sightDistance);
+    }
+
+    private IEnumerator AnimateShootingLine()
+    {
+        LineRenderer.SetPositions(new []{transform.position + (transform.up * 0.5f), transform.position + (transform.up * Eye.sightDistance)});
+        LineRenderer.enabled = true;
+        yield return new WaitForSeconds(lineDisplayTime);
+        LineRenderer.enabled = false;
     }
 }
 

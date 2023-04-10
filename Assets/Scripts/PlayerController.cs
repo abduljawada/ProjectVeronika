@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,6 +9,9 @@ public class PlayerController : NetworkBehaviour
 
     [SerializeField]
     private bool isCrouching;
+
+    [SerializeField]
+    private float lineDisplayTime = 0.5f;
 
     [SerializeField]
     private float speed = 5f;
@@ -36,6 +40,8 @@ public class PlayerController : NetworkBehaviour
     private UnityEvent onStopCrouch;
 
     private Rigidbody2D Rb => GetComponent<Rigidbody2D>();
+
+    private LineRenderer LineRenderer => GetComponent<LineRenderer>();
     
     private Vector2 _velocity;
     
@@ -93,7 +99,7 @@ public class PlayerController : NetworkBehaviour
         if (Input.GetMouseButton(0) && Time.time > _nextFireTime)
         {
             Debug.Log("Shooting!");
-            
+
             _nextFireTime = Time.time + fireRate;
 
             if (_camera)
@@ -104,6 +110,9 @@ public class PlayerController : NetworkBehaviour
                 Vector2 direction = mousePosition - pos;
 
                 RaycastHit2D hit = Physics2D.Raycast(pos, direction, shootingDistance, raycastLayer);
+                
+                LineRenderer.SetPositions(new []{transform.position, transform.position + (Vector3) direction.normalized * shootingDistance});
+                StartCoroutine(AnimateShootingLine());
                 
                 Debug.Log("Hitting " + hit.collider.name);
                 
@@ -117,6 +126,13 @@ public class PlayerController : NetworkBehaviour
         Rb.velocity = isCrouching ? _velocity : Vector2.Lerp(Rb.velocity, _velocity, acceleration);
     }
 
+    private IEnumerator AnimateShootingLine()
+    {
+        LineRenderer.enabled = true;
+        yield return new WaitForSeconds(lineDisplayTime);
+        LineRenderer.enabled = false;
+    }
+    
     private void OnDrawGizmosSelected()
     {
         Vector2 mousePos = _camera.ScreenToWorldPoint(Input.mousePosition);
