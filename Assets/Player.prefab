@@ -124,6 +124,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1ab1f4e6df85548acf00e6c02cb412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyForHost: 0
+  destroyForServer: 0
+  destroyForClient: 1
 --- !u!1 &4043579103028879276
 GameObject:
   m_ObjectHideFlags: 0
@@ -705,7 +708,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   m_ShapePathHash: 160822549
   m_Mesh: {fileID: 0}
-  m_InstanceId: 35228
+  m_InstanceId: 28712
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.5, y: 0.5, z: 0}
