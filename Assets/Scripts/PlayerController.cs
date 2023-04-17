@@ -111,8 +111,7 @@ public class PlayerController : NetworkBehaviour
 
                 RaycastHit2D hit = Physics2D.Raycast(pos, direction, shootingDistance, raycastLayer);
                 
-                LineRenderer.SetPositions(new []{transform.position, transform.position + (Vector3) direction.normalized * shootingDistance});
-                AnimateShootingLineClientRPC();
+                AnimateShootingLineClientRPC(direction);
                 
                 Debug.Log("Hitting " + hit.collider.name);
                 
@@ -127,13 +126,14 @@ public class PlayerController : NetworkBehaviour
     }
 
     [ClientRpc]
-    private void AnimateShootingLineClientRPC()
+    private void AnimateShootingLineClientRPC(Vector2 dir)
     {
-        StartCoroutine(AnimateShootingLine());
+        StartCoroutine(AnimateShootingLine(dir));
     }
     
-    private IEnumerator AnimateShootingLine()
+    private IEnumerator AnimateShootingLine(Vector2 dir)
     {
+        LineRenderer.SetPositions(new []{transform.position, transform.position + (Vector3) dir.normalized * shootingDistance});
         LineRenderer.enabled = true;
         yield return new WaitForSeconds(lineDisplayTime);
         LineRenderer.enabled = false;
