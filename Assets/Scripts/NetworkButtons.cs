@@ -1,6 +1,5 @@
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using TMPro;
 using Unity.Netcode.Transports.UTP;
@@ -16,7 +15,6 @@ public class NetworkButtons : MonoBehaviour
         Transport.ConnectionData.Address = ipInputField.text;
         UnloadScene();
         NetworkManager.Singleton.StartClient();
-        Destroy(PlayerController.Singleton.gameObject.GetComponentInChildren<Light2D>().gameObject);
     }
 
     public void StartHost()

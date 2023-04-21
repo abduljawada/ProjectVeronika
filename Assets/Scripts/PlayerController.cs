@@ -73,7 +73,7 @@ public class PlayerController : NetworkBehaviour
         Vector2 inputVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         inputVector.Normalize();
 
-        if (Input.GetKeyDown(KeyCode.X))
+        /*if (Input.GetKeyDown(KeyCode.X))
         {
             isCrouching = !isCrouching;
             
@@ -85,7 +85,7 @@ public class PlayerController : NetworkBehaviour
             {
                 onStopCrouch?.Invoke();
             }
-        }
+        }*/
 
         if (isCrouching)
         {
@@ -133,7 +133,8 @@ public class PlayerController : NetworkBehaviour
     
     private IEnumerator AnimateShootingLine(Vector2 dir)
     {
-        LineRenderer.SetPositions(new []{transform.position, transform.position + (Vector3) dir.normalized * shootingDistance});
+        var position = transform.position;
+        LineRenderer.SetPositions(new []{position, position + (Vector3) dir.normalized * shootingDistance});
         LineRenderer.enabled = true;
         yield return new WaitForSeconds(lineDisplayTime);
         LineRenderer.enabled = false;

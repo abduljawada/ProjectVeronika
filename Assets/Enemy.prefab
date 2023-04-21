@@ -177,9 +177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ec5753a379af7a44854e71c6728c013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  patrolPoints:
-  - {x: 9, y: 4}
-  - {x: 9, y: -4}
+  patrolPoints: []
 --- !u!114 &937611014354733941
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,11 +230,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e434fedc0d2a614d930fecba5cb205d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angleRange: 60
+  angleRange: 45
+  raycastOffset: 0.5
   sightDistance: 5
   raycastLayer:
     serializedVersion: 2
-    m_Bits: 136
+    m_Bits: 200
 --- !u!114 &3939763622449551779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -251,7 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 5
   fireRate: 1
-  lineDisplayTime: 0.2
+  lineDisplayTime: 0.1
 --- !u!114 &4729561248484807350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,7 +317,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a2ef54bed614c143bb7216e40d1fd81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1
+  maxHealth: 3
   onDeathEvent:
     m_PersistentCalls:
       m_Calls:
@@ -647,7 +646,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   m_ShapePathHash: 0
   m_Mesh: {fileID: 0}
-  m_InstanceId: 33556
+  m_InstanceId: 32004
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.5, y: 0.5, z: 0}

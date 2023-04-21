@@ -10,6 +10,8 @@ public class Health : MonoBehaviour
     [SerializeField] private UnityEvent onDeathEvent;
 
     private TMP_Text _playerHealthText;
+    
+    private EnemyMind EnemyMind => GetComponent<EnemyMind>(); 
 
     private void Awake()
     {
@@ -21,7 +23,9 @@ public class Health : MonoBehaviour
         if (PlayerHealthUI.Singleton)
         {
             _playerHealthText = PlayerHealthUI.Singleton.GetComponent<TMP_Text>();
+            return;
         }
+            Debug.LogWarning("No PlayerHealthUI Singleton");
     }
 
     public void LoseHealth(int damage = 1)
@@ -34,6 +38,11 @@ public class Health : MonoBehaviour
             {
                 _playerHealthText.text = _currentHealth.ToString();
             }
+        }
+
+        if (EnemyMind)
+        {
+            EnemyMind.FoundPlayer();
         }
 
         if (_currentHealth <= 0)

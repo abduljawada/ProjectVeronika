@@ -4,6 +4,7 @@ using UnityEngine.Serialization;
 public class EnemyEye : MonoBehaviour
 {
     [SerializeField] float angleRange = 45f;
+    [SerializeField] private float raycastOffset = 0.5f;
     public float sightDistance = 7f;
     public LayerMask raycastLayer;
     EnemyMind Mind => GetComponent<EnemyMind>();
