@@ -125,7 +125,7 @@ MonoBehaviour:
   radius: 0.4
   height: 2
   canMove: 1
-  maxSpeed: 1
+  maxSpeed: 1.5
   gravity: {x: NaN, y: NaN, z: NaN}
   groundMask:
     serializedVersion: 2
@@ -230,8 +230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e434fedc0d2a614d930fecba5cb205d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  angleRange: 45
-  raycastOffset: 0.5
+  angleRange: 60
   sightDistance: 5
   raycastLayer:
     serializedVersion: 2
@@ -318,6 +317,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 3
+  onDamageEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3939763622449551779}
+        m_TargetAssemblyTypeName: Enemy.EnemyMind, Enemy
+        m_MethodName: FoundPlayer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   onDeathEvent:
     m_PersistentCalls:
       m_Calls:

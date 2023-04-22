@@ -124,9 +124,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d1ab1f4e6df85548acf00e6c02cb412, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyForHost: 0
-  destroyForServer: 0
-  destroyForClient: 1
+  triggerForHost: 0
+  triggerForServer: 0
+  triggerForClient: 1
+  triggerEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4043579102575329427}
+        m_TargetAssemblyTypeName: UnityEngine.Behaviour, UnityEngine
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4043579103028879276
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,7 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCrouching: 0
   lineDisplayTime: 0.1
-  speed: 5
+  speed: 3
   acceleration: 0.2
   crouchingSpeed: 1.5
   shootingDistance: 5
@@ -708,7 +723,7 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   m_ShapePathHash: 160822549
   m_Mesh: {fileID: 0}
-  m_InstanceId: 32100
+  m_InstanceId: 32334
   m_LocalBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0.5, y: 0.5, z: 0}
